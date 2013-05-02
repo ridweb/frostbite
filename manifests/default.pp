@@ -24,6 +24,12 @@ node default {
         require => Package["python-software-properties"]
     }
 
+    exec { "git ppa":
+        command => "sudo add-apt-repository ppa:git-core/ppa --yes",
+        require => Exec["php54 ppa"]
+    }
+
+
     exec { "apt-get update":
         command => "apt-get update",
     }
@@ -43,11 +49,12 @@ node default {
         "php-apc",
         "mysql-server",
         "imagemagick",
-        "php5-imagick"
+        "php5-imagick",
+        "git"
     ]
     package { $packages:
         ensure => "installed",
-        require => Exec["php54 ppa"]
+        require => Exec["git ppa"]
     }
 
     exec { "apt-get upgrade":
