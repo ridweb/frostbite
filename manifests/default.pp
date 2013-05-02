@@ -50,6 +50,11 @@ node default {
         require => Exec["php54 ppa"]
     }
 
+    exec { "apt-get upgrade":
+        command => "sudo apt-get update && sudo apt-get upgrade -y",
+        require => Package["php5"]
+    }
+
     exec { "enable ssl":
         command => "sudo a2enmod ssl",
         require => Package["apache2"]
@@ -86,14 +91,19 @@ node default {
         require => Service["mysql"]
     }
     
-    file { "/etc/apache2/sites-available/frostbite":
+    file { "/etc/apache2/sites-available/default":
         source => "/tmp/vagrant-puppet/manifests/resources/frostbite.conf",
         require => Package["apache2"]
     }
 
+    exec { "enable rewrite":
+        command => "sudo a2enmod rewrite",
+        require => Package["apache2"]
+    }
+
     exec { "enable site":
-        command => "sudo a2ensite frostbite",
-        require => File["/etc/apache2/sites-available/frostbite"]
+        command => "sudo a2ensite default",
+        require => Package["apache2"]
     }
 
     

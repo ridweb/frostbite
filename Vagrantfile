@@ -11,4 +11,7 @@ Vagrant::Config.run do |config|
     puppet.manifests_path = "manifests"
     puppet.manifest_file = "default.pp"
   end
+
+  config.vm.share_folder "www", "/var/www", "./"
+
 end
