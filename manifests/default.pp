@@ -106,6 +106,8 @@ node default {
         require => File["/etc/apache2/sites-available/default"]
     }
 
-    
-
+    exec { "restart apache":
+        command => "sudo service apache2 reload",
+        require => Exec["enable site"]
+    }
 }
