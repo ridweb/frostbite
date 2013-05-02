@@ -15,24 +15,44 @@ node default {
     Package { require => Exec["apt-get update"] }
     File { require => Exec["apt-get update"] }
 
-    package { "curl":
+    package { "python-software-properties":
         ensure => present,
     }
 
-    package { "apache2":
-        ensure => present,
+    exec { "php54 ppa":
+        command => "sudo add-apt-repository ppa:ondrej/php5 --yes",
+        require => Package["python-software-properties"]
     }
 
     exec { "apt-get update":
         command => "apt-get update",
     }
 
-    $php = ["php5", "php5-dev", "php5-cli", "php5-mysql", "libapache2-mod-php5", "php-pear", "php5-mcrypt", "php5-curl", "php-apc"]
-    package { $php: ensure => "installed" }
+
+    $packages = [
+        "curl",
+        "apache2",
+        "php5", 
+        "php5-dev",
+        "php5-cli",
+        "php5-mysql",
+        "libapache2-mod-php5",
+        "php-pear",
+        "php5-mcrypt",
+        "php5-curl",
+        "php-apc",
+        "mysql-server",
+        "imagemagick",
+        "php5-imagick"
+    ]
+    package { $packages:
+        ensure => "installed",
+        require => Exec["php54 ppa"]
+    }
 
     exec { "enable ssl":
         command => "sudo a2enmod ssl",
-        require => Exec["zend-server"]
+        require => Package["apache2"]
     }
 
     exec { "add ssl port":
@@ -45,18 +65,35 @@ node default {
         require => Exec["add ssl port"]
     }
 
-    package { "imagemagick":
-        ensure => installed
+    file { "/etc/apache2/ssl/apache.key":
+        source => "/tmp/vagrant-puppet/manifests/resources/ssl/apache.key",
+        require => Exec["add ssl dir"]
     }
 
-    package { "mysql-server":
-        ensure => installed
+    file { "/etc/apache2/ssl/apache.pem":
+        source => "/tmp/vagrant-puppet/manifests/resources/ssl/apache.pem",
+        require => Exec["add ssl dir"]
     }
 
     service { "mysql":
         enable => true,
         ensure => running,
         require => Package["mysql-server"],
+    }
+
+    exec { "create db":
+        command => "echo 'create database frostbite' | mysql -uroot",
+        require => Service["mysql"]
+    }
+    
+    file { "/etc/apache2/sites-available/frostbite":
+        source => "/tmp/vagrant-puppet/manifests/resources/frostbite.conf",
+        require => Package["apache2"]
+    }
+
+    exec { "enable site":
+        command => "sudo a2ensite frostbite",
+        require => File["/etc/apache2/sites-available/frostbite"]
     }
 
     
