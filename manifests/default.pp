@@ -103,7 +103,7 @@ node default {
 
     exec { "enable site":
         command => "sudo a2ensite default",
-        require => Package["apache2"]
+        require => File["/etc/apache2/sites-available/default"]
     }
 
     
