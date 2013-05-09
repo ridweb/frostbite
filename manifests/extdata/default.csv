@@ -1,0 +1,6 @@
+mysql_user,root
+mysql_pass,
+mysql_base,
+timezone,Europe/London
+ssl_file_base,apache
+apache_conf_file,frostbite.conf
