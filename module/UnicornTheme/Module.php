@@ -21,30 +21,51 @@ class Module
         );
     }
 
-    public function onBootstrap($e)
+    public function onBootstrap(\Zend\Mvc\MvcEvent $e)
     {
+
         // borrowed from EdpModuleLayouts
-        $e->getApplication()->getEventManager()->getSharedManager()->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function($e) {
-            $controller      = $e->getTarget();
-            $request         = $controller->getRequest();
-            $matchedRoute    = $e->getRouteMatch()->getMatchedRouteName();
+        $sharedEventManager = $e->getApplication()->getEventManager()->getSharedManager();
 
-            $controllerClass = get_class($controller);
-            $moduleNamespace = substr($controllerClass, 0, strpos($controllerClass, '\\'));
-            $config          = $e->getApplication()->getServiceManager()->get('config');
+        $sharedEventManager->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function(\Zend\Mvc\MvcEvent $dispatchEvent) {
+                $controller = $dispatchEvent->getTarget();
+                $request = $controller->getRequest();
+                $matchedRoute = $dispatchEvent->getRouteMatch()->getMatchedRouteName();
 
-            $layout = null;
-            if (isset($config['module_layouts'][$moduleNamespace])) {
-                $layout = $config['module_layouts'][$moduleNamespace];
-            }
+                $controllerClass = get_class($controller);
+                $moduleNamespace = substr($controllerClass, 0, strpos($controllerClass, '\\'));
+                $config = $dispatchEvent->getApplication()->getServiceManager()->get('config');
 
-            if(isset($config['route_layouts'][$matchedRoute])) {
-                $layout = $config['route_layouts'][$matchedRoute];
-            }
+                $layout = 'layout/layout';
 
-            if ($layout !== null) {
-                $controller->layout($layout);
-            }
-        }, 99);
+                if (array_key_exists('module_layoutes', $config)) {
+                    if (array_key_exists($moduleNamespace, $config['module_layouts'])) {
+                        $layout = $config['module_layouts'][$moduleNamespace];
+                    }
+                }
+
+                if (array_key_exists('route_layouts', $config)) {
+                    if (array_key_exists($matchedRoute, $config['route_layouts'])) {
+                        $layout = $config['route_layouts'][$matchedRoute];
+                    }
+                }
+
+                if ($layout !== 'layout/layout') {
+                    if (empty($layout)) {
+                        $result = $dispatchEvent->getResult();
+                        if ($result instanceof \Zend\View\Model\ViewModel) {
+                            $result->setTerminal(true);
+                        }
+                    } else {
+                        $controller->layout($layout);
+                    }
+                }
+            }, 99);
+
+        $sharedEventManager->attach('Zend\View\View', 'render', function($e) {
+                $viewModel = $e->getTarget();
+                \Zend\Debug\Debug::dump($viewModel);
+            });
     }
+
 }

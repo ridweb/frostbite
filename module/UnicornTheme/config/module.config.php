@@ -25,6 +25,7 @@ return array(
     ),
     'route_layouts' => array(
         'zfcuser/register' => 'layout/login',
-        'zfcuser/login' => 'layout/login'
+//        'zfcuser/register' => null,
+        'zfcuser/login' => 'layout/login',
     )
 );
