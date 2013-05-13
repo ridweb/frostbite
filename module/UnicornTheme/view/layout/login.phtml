@@ -9,6 +9,7 @@
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/unicorn/css/unicorn.login.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css'); ?>
 
@@ -16,10 +17,16 @@
         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',)); ?>
     </head>
     <body>
-        <?php echo $this->content; ?>
-        <hr>
+        <div id="logo">
+            <img src="/unicorn/img/logo.png" alt="" />
+        </div>
+        <div id="loginbox">
+            <?php echo $this->content; ?>
+        </div>
         <?php echo $this->inlineScript()
                 ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+                ->prependFile($this->basePath() . '/js/jquery.min.js') 
+                ->appendFile($this->basePath() . '/unicorn/js/unicorn.login.js')
+            ?>
     </body>
 </html>

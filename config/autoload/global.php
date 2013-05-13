@@ -12,5 +12,24 @@
  */
 
 return array(
-    // ...
+    'db' => array(
+        'driver'         => 'Pdo',
+        'dsn'            => 'mysql:dbname=frostbite;host=localhost',
+        'username'       => 'root',
+        'password'       => '',
+        'driver_options' => array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+        ),
+    ),
+    'service_manager' => array(
+        'factories' => array(
+            'Zend\Db\Adapter\Adapter' => function($sm) {
+                $adapterFactory = new \Zend\Db\Adapter\AdapterServiceFactory();
+                $adapter = $adapterFactory->createService($sm);
+
+                \Zend\Db\TableGateway\Feature\GlobalAdapterFeature::setStaticAdapter($adapter);
+               return $adapter;
+            }
+        ),
+    ),
 );

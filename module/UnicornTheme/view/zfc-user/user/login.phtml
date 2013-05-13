@@ -1,7 +1,4 @@
 <?php
-$this->headLink()->prependStylesheet($this->basePath() . '/css/unicorn.login.css');
-$this->inlineScript()->appendFile($this->basePath() . '/js/unicorn.login.js');
-
 $form = $this->loginForm;
 $form->prepare();
 $form->setAttribute('action', $this->url('zfcuser/login'));
@@ -9,10 +6,6 @@ $form->setAttribute('method', 'post');
 $form->setAttribute('id', 'loginorm');
 $form->setAttribute('class', 'form-vertical');
 ?>
-<div id="logo">
-    <img src="/img/logo.png" alt="" />
-</div>
-<div id="loginbox">
     <?php echo $this->form()->openTag($form); ?>
     <div class="control-group">
         <?php
@@ -27,7 +20,7 @@ $form->setAttribute('class', 'form-vertical');
             <div class="input-prepend">
                 <span class="add-on"><i class="icon-user"></i></span><?php 
                     $identity = $form->get('identity');
-                    $identity->setAttribute('placeholder', 'Password');
+                    $identity->setAttribute('placeholder', 'Username');
                     echo $this->formInput($identity) ?>
             </div>
         </div>
@@ -62,4 +55,3 @@ $form->setAttribute('class', 'form-vertical');
         </div>
     </form>
 <?php endif; ?>
-</div>
