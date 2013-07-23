@@ -19,8 +19,8 @@ class mysql {
     $password = extlookup('mysql_pass')
     $database = extlookup('mysql_base')
 
-    package { "mysql-server":
-        ensure => "installed"
+    package { "mysql-server": 
+        ensure => "installed" 
     }
 
     service { "mysql":
@@ -29,14 +29,14 @@ class mysql {
         require => Package["mysql-server"],
     }
 
-    # This part is based on
+    # This part is based on 
     # http://bitfieldconsulting.com/puppet-and-mysql-create-databases-and-users
 
     exec { "create db":
         unless => "mysql -uroot ${database}",
         command => "echo 'create database ${database}' | mysql -uroot",
         require => Service["mysql"]
-    }
+    }    
 
     exec { "grant rights":
         unless => "/usr/bin/mysql -u${username} -p\"${password}\" ${database}",
@@ -48,14 +48,13 @@ class mysql {
     # and set the db credentials in there!
 }
 
-class apache {
+class apache_and_php {
     $ssl_file_base = extlookup('ssl_file_base')
-    $apache_conf_file = extlookup('apache_conf_file')
 
     $packages = [
         "curl",
         "apache2",
-        "php5",
+        "php5", 
         "php5-dev",
         "php5-cli",
         "php5-mysql",
@@ -103,10 +102,14 @@ class apache {
         source => "/tmp/vagrant-puppet/manifests/resources/ssl/${ssl_file_base}.pem",
         require => File["/etc/apache2/ssl"]
     }
-
+    
     file { "/etc/apache2/sites-available/default":
-        source => "/tmp/vagrant-puppet/manifests/resources/${apache_conf_file}",
+        source => "/tmp/vagrant-puppet/manifests/resources/frostbite.conf",
         require => Package["apache2"]
+    }
+
+    file { "/var/www/index.html":
+	   ensure => absent
     }
 
     exec { "enable rewrite":
@@ -125,11 +128,40 @@ class apache {
     }
 }
 
+class composer {
+    exec { "install composer executable":
+        onlyif => "[ ! -f /usr/local/bin/composer ]",
+        command => "curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/composer",
+        require => [Package["php5-cli"], Package["curl"]],
+        creates => "/usr/local/bin/composer",
+        timeout => 0
+    }
+
+    exec { "upgrade composer":
+        onlyif => "[ -f /usr/local/bin/composer ]",
+        command => "composer self-update",
+        require => Package["php5-cli"],
+        timeout => 0
+    }
+
+    exec { "install composer spec":
+        cwd => "/var/www",
+        environment => "HOME=/home/${id}",
+        command => "composer install",
+        require => [Exec["install composer executable"], Exec["upgrade composer"]],
+        timeout => 0
+    }
+}
+
 node default {
     include timezone
 
     Exec {
         path => '/usr/local/bin:/bin:/usr/bin:/home/vagrant/bin:/usr/sbin:/sbin'
+    }
+
+    exec { "apt-get update":
+        command => "apt-get update",
     }
 
     Package { require => Exec["apt-get update"] }
@@ -149,10 +181,7 @@ node default {
         require => Exec["php54 ppa"]
     }
 
-    exec { "apt-get update":
-        command => "apt-get update",
-    }
-
     include mysql
-    include apache
+    include apache_and_php
+    include composer
 }
