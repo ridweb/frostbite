@@ -1,5 +1,7 @@
 <?php
 
+namespace UnicornTheme\View\Helper;
+
 /**
  * Description of UnicornNavigation
  *
@@ -7,7 +9,5 @@
  */
 class UnicornNavigation
 {
-    //put your code here
+    
 }
-
-?>

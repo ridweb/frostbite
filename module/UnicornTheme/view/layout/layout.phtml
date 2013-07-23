@@ -26,41 +26,10 @@
         <div id="header">
             <h1><a href="./dashboard.html">Unicorn Admin</a></h1>
         </div>
-        <div id="search">
+<!--        <div id="search">
             <input type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
-        </div>
-        <div id="user-nav" class="navbar navbar-inverse">
-            <ul class="nav btn-group">
-                <li class="btn btn-inverse" ><a title="" href="#"><i class="icon icon-user"></i> <span class="text">Profile</span></a></li>
-                <li class="btn btn-inverse dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="sAdd" title="" href="#">new message</a></li>
-                        <li><a class="sInbox" title="" href="#">inbox</a></li>
-                        <li><a class="sOutbox" title="" href="#">outbox</a></li>
-                        <li><a class="sTrash" title="" href="#">trash</a></li>
-                    </ul>
-                </li>
-                <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
-                <li class="btn btn-inverse"><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
-            </ul>
-        </div>
-<!--        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Skeleton Application') ?></a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                        </ul>
-                    </div>/.nav-collapse 
-                </div>
-            </div>
         </div>-->
+        <?=$this->unicornUserWidget(); ?>
         <div id="sidebar">
             <a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
             <ul>
@@ -103,7 +72,7 @@
             <a href="#light-blue" style="background-color: #8399b0;"></a>
             <a href="#blue" style="background-color: #2D2F57;"></a>
             <a href="#red" style="background-color: #673232;"></a>
-            <a href="#red-green" style="background-image: url('img/demo/red-green.png');background-repeat: no-repeat;"></a>
+            <a href="#red-green" style="background-image: url('/unicorn/img/demo/red-green.png');background-repeat: no-repeat;"></a>
         </div>
 
         <div id="content">
@@ -117,7 +86,7 @@
             ->prependFile('/unicorn/js/jquery.flot.resize.min.js')
             ->prependFile('/unicorn/js/jquery.flot.min.js')
             ->prependFile('/js/bootstrap.min.js')
-            ->prependFile('/unicorn/js/jquery.ui.custom.js')
+            ->prependFile('/unicorn/js/jquery-ui.custom.js')
             ->prependFile('/js/jquery.min.js')
             ->prependFile('/unicorn/js/excanvas.min.js')
         ; ?>

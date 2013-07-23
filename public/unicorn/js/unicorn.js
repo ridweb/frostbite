@@ -109,26 +109,21 @@ $(document).ready(function(){
 	}
 	
 	// === Style switcher === //
-	$('#style-switcher i').click(function()
-	{
-		if($(this).hasClass('open'))
-		{
-			$(this).parent().animate({marginRight:'-=220'});
-			$(this).removeClass('open');
-		} else 
-		{
-			$(this).parent().animate({marginRight:'+=220'});
-			$(this).addClass('open');
+	var styleSwitcher = $('#style-switcher');
+        styleSwitcher.find('i').click(function() {
+                var $this = $(this);
+		if($this.hasClass('open')) {
+                    $this.removeClass('open').parent().animate({marginRight:'-=220'});
+		} else {
+                    $this.addClass('open').parent().animate({marginRight:'+=220'});
 		}
-		$(this).toggleClass('icon-arrow-left');
-		$(this).toggleClass('icon-arrow-right');
+		$this.toggleClass('icon-arrow-left icon-arrow-right');
 	});
 	
-	$('#style-switcher a').click(function()
-	{
-		var style = $(this).attr('href').replace('#','');
-		$('.skin-color').attr('href','css/unicorn.'+style+'.css');
-		$(this).siblings('a').css({'border-color':'transparent'});
-		$(this).css({'border-color':'#aaaaaa'});
+	styleSwitcher.find('a').click(function() {
+            var style = $(this).attr('href').replace('#','');
+            $('.skin-color').attr('href','/unicorn/css/unicorn.'+style+'.css');
+            $(this).siblings('a').css({'border-color':'transparent'});
+            $(this).css({'border-color':'#aaaaaa'});
 	});
 });

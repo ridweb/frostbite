@@ -3,7 +3,10 @@
 return array(
     'view_helpers' => array(
         'invokables'=> array(
-            'themeasset'    => __NAMESPACE__.'\View\Helper\ThemeAsset',
+            'unicornuserwidget'    => 'UnicornTheme\View\Helper\UnicornUserWidget',
+        ),
+        'aliases' => array(
+            'userwidget' => 'unicornuserwidget'
         )
     ),
     'view_manager' => array(

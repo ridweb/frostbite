@@ -1,4 +1,11 @@
-<div style="float:left; padding-right:16px;"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail()) ?></div>
+<div id="content-header">
+    <h1>Welcome</h1>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+<div style="float:left; padding-right:16px;"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), array('w'=>16)); ?></div>
 <h3>Hello, <?php echo $this->zfcUserDisplayName() ?>!</h3>
 <a href="<?php echo $this->url('zfcuser/logout') ?>">[Sign Out]</a>
 <div style="clear:both;"></div>
+    </div>
+</div>
