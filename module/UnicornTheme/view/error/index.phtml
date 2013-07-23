@@ -1,6 +1,9 @@
-<h1><?php echo $this->translate('An error occurred') ?></h1>
-<h2><?php echo $this->message ?></h2>
-
+<div id="content-header">
+    <h1><?php echo $this->translate('An error occurred') ?></h1>
+    <h2><?php echo $this->message ?></h2>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
 <?php if (isset($this->display_exceptions) && $this->display_exceptions): ?>
 
 <?php if(isset($this->exception) && $this->exception instanceof Exception): ?>
@@ -60,3 +63,5 @@
 <?php endif ?>
 
 <?php endif ?>
+    </div>
+</div>
