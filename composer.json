@@ -1,18 +1,18 @@
 {
-    "name": "zendframework/skeleton-application",
-    "description": "Skeleton Application for ZF2",
+    "name": "frostbite/frostbite",
+    "description": "Community Management Software",
     "license": "BSD-3-Clause",
     "keywords": [
         "framework",
-        "zf2"
+        "zf2",
+        "community",
+        "management"
     ],
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": ">2.2.0rc1",
-	"zf-commons/zfc-user": "dev-master",
-        "cdli/CdliTwoStageSignup": "dev-master",
-        "cdli/user-profile": "dev-master"
+	"zf-commons/zfc-user": "dev-master"
     },
     "config": {
         "vendor-dir": "frostbite/vendor"

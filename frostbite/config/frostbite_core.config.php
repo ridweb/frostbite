@@ -5,7 +5,7 @@ return array(
     'modules' => array(
         'ZfcBase',
         'ZfcUser',
-//        'CdliTwoStageSignup',
+        'FrostbiteUser',
         'CdliUserProfile',
         'Application',
 //        'CustomModule',
