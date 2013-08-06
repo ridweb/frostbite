@@ -9,4 +9,6 @@ chdir(dirname(__DIR__));
 require 'init_autoloader.php';
 
 // Run the application!
-Zend\Mvc\Application::init(require 'config/application.config.php')->run();
+$config = require './frostbite/config/frostbite_core.config.php';
+//Zend\Debug\Debug::dump($config);
+Zend\Mvc\Application::init($config)->run();
