@@ -1,7 +1,3 @@
 !.gitignore
-.composer
-composer
-zendframework
-autoload.php
-bin
-zf-commons
+*
+
