@@ -5,11 +5,10 @@ return array(
     'modules' => array(
         'ZfcBase',
         'ZfcUser',
-        'FrostbiteUser',
-        'Application',
+        'MdgMultiUser',
+        'Frostbite',
 //        'CustomModule',
-//        'CustomTheme',
-//        'UnicornTheme',
+        'CustomTheme',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

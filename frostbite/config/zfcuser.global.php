@@ -6,71 +6,10 @@
  * drop this config file in it and change the values as you wish.
  */
 $settings = array(
-    /**
-     * Zend\Db\Adapter\Adapter DI Alias
-     *
-     * Please specify the DI alias for the configured Zend\Db\Adapter\Adapter
-     * instance that ZfcUser should use.
-     */
-    //'zend_db_adapter' => 'Zend\Db\Adapter\Adapter',
-
-    /**
-     * User Model Entity Class
-     *
-     * Name of Entity class to use. Useful for using your own entity class
-     * instead of the default one provided. Default is ZfcUser\Entity\User.
-     * The entity class should implement ZfcUser\Entity\UserInterface
-     */
-    'user_entity_class' => 'FrostbiteUser\Entity\User',
-
-    /**
-     * Enable registration
-     *
-     * Allows users to register through the website.
-     *
-     * Accepted values: boolean true or false
-     */
+    'user_entity_class' => 'Frostbite\Entity\User',
     //'enable_registration' => true,
-
-    /**
-     * Enable Username
-     *
-     * Enables username field on the registration form, and allows users to log
-     * in using their username OR email address. Default is false.
-     *
-     * Accepted values: boolean true or false
-     */
     'enable_username' => true,
-
-    /**     
-     * Authentication Adapters
-     *
-     * Specify the adapters that will be used to try and authenticate the user
-     *
-     * Default value: array containing 'ZfcUser\Authentication\Adapter\Db' with priority 100
-     * Accepted values: array containing services that implement 'ZfcUser\Authentication\Adapter\ChainableAdapter'
-     */
     'auth_adapters' => array( 100 => 'ZfcUser\Authentication\Adapter\Db' ),
-
-    /**
-     * Enable Display Name
-     *
-     * Enables a display name field on the registration form, which is persisted
-     * in the database. Default value is false.
-     *
-     * Accepted values: boolean true or false
-     */
-//    'enable_display_name' => true,
-
-    /**
-     * Modes for authentication identity match
-     *
-     * Specify the allowable identity modes, in the order they should be
-     * checked by the Authentication plugin.
-     *
-     * Default value: array containing 'email'
-     * Accepted values: array containing one or more of: email, username
-     */
     'auth_identity_fields' => array( 'username' ),
 
     /**
