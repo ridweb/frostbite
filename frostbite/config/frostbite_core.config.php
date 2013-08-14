@@ -6,7 +6,6 @@ return array(
         'ZfcBase',
         'ZfcUser',
         'FrostbiteUser',
-        'CdliUserProfile',
         'Application',
 //        'CustomModule',
 //        'CustomTheme',
@@ -20,7 +19,8 @@ return array(
             './themes',
         ),
         'config_glob_paths' => array(
-            './frostbite/config/autoload/{,*.}{global,local}.php',
+            './frostbite/config/{,*.}{global,local}.php',
+            './user_config/{,*.}{global,local}.php'
         ),
 
         // Whether or not to enable a configuration cache.
